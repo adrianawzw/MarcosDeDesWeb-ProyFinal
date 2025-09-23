@@ -1,29 +1,87 @@
-<main class="registro-container">
-  <h1>Registro de Usuario</h1>
-  <form (ngSubmit)="register()"> <!-- ← Asegúrate de que diga register() -->
-    <div class="input-group">
-      <label for="email">Email</label>
-      <input id="email" type="email" [(ngModel)]="email" name="email" required placeholder="tu@email.com">
-    </div>
+<main class="flex justify-center bg-gray-100 px-4 py-12">
+  <div class="w-full max-w-3xl bg-white shadow-lg rounded-2xl p-8">
+    <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">
+      Registro de Paciente
+    </h1>
 
-    <div class="input-group">
-      <label for="username">Nombre de Usuario</label>
-      <input id="username" type="text" [(ngModel)]="username" name="username" required
-        placeholder="Tu nombre de usuario">
-    </div>
+    <form (ngSubmit)="register()" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Correo -->
+      <div class="col-span-1">
+        <label for="email" class="block text-sm font-medium text-gray-700">Correo</label>
+        <input id="email" type="email"
+               [(ngModel)]="email" name="email" required
+               class="mt-1 w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-300 focus:ring-opacity-50 p-2"/>
+      </div>
 
-    <div class="input-group">
-      <label for="password">Contraseña</label>
-      <input id="password" type="password" [(ngModel)]="password" name="password" required placeholder="Tu contraseña">
-    </div>
+      <!-- Nombre -->
+      <div>
+        <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
+        <input id="nombre" type="text"
+               [(ngModel)]="nombre" name="nombre" required
+               class="mt-1 w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-300 focus:ring-opacity-50 p-2"/>
+      </div>
 
-    <button type="submit" [disabled]="!email || !username || !password">
-      Registrarse
-    </button>
-  </form>
+      <!-- Apellido -->
+      <div>
+        <label for="apellido" class="block text-sm font-medium text-gray-700">Apellido</label>
+        <input id="apellido" type="text"
+               [(ngModel)]="apellido" name="apellido" required
+               class="mt-1 w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-300 focus:ring-opacity-50 p-2"/>
+      </div>
 
+      <!-- DNI -->
+      <div>
+        <label for="dni" class="block text-sm font-medium text-gray-700">DNI</label>
+        <input id="dni" type="text"
+               [(ngModel)]="dni" name="dni" required
+               class="mt-1 w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-300 focus:ring-opacity-50 p-2"/>
+      </div>
 
-  <p class="login-link">
-    ¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión aquí</a>
-  </p>
+      <!-- Dirección -->
+      <div class="md:col-span-2">
+        <label for="direccion" class="block text-sm font-medium text-gray-700">Dirección</label>
+        <input id="direccion" type="text"
+               [(ngModel)]="direccion" name="direccion"
+               class="mt-1 w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-300 focus:ring-opacity-50 p-2"/>
+      </div>
+
+      <!-- Teléfono -->
+      <div>
+        <label for="telefono" class="block text-sm font-medium text-gray-700">Teléfono</label>
+        <input id="telefono" type="text"
+               [(ngModel)]="telefono" name="telefono"
+               class="mt-1 w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-300 focus:ring-opacity-50 p-2"/>
+      </div>
+
+      <!-- Fecha de Nacimiento -->
+      <div>
+        <label for="fechaNacimiento" class="block text-sm font-medium text-gray-700">Fecha de Nacimiento</label>
+        <input id="fechaNacimiento" type="date"
+               [(ngModel)]="fechaNacimiento" name="fechaNacimiento"
+               class="mt-1 w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-300 focus:ring-opacity-50 p-2"/>
+      </div>
+
+      <!-- Contraseña -->
+      <div class="md:col-span-2">
+        <label for="password" class="block text-sm font-medium text-gray-700">Contraseña</label>
+        <input id="password" type="password"
+               [(ngModel)]="password" name="password" required
+               class="mt-1 w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-300 focus:ring-opacity-50 p-2"/>
+      </div>
+
+      <!-- Botón -->
+      <div class="md:col-span-2">
+        <button type="submit"
+                [disabled]="!email || !nombre || !apellido || !dni || !password"
+                class="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 disabled:opacity-50">
+          Registrarse
+        </button>
+      </div>
+    </form>
+
+    <p class="mt-6 text-center text-sm text-gray-600">
+      ¿Ya tienes cuenta?
+      <a routerLink="/login" class="text-indigo-600 font-medium hover:underline">Inicia sesión aquí</a>
+    </p>
+  </div>
 </main>

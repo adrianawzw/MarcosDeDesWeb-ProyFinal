@@ -1,9 +1,26 @@
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 
-export const generateToken = (user) => {
+const JWT_SECRET = process.env.JWT_SECRET || "clave_secreta_super_segura";
+const JWT_EXPIRES_IN = "1h";
+
+// Generar token
+export const generateToken = (usuario) => {
   return jwt.sign(
-    { userId: user.id, username: user.username },
-    process.env.JWT_SECRET || 'secretkey',
-    { expiresIn: '1h' }
+    {
+      id: String(usuario.id_usuario), // convertir BigInt a String
+      correo: usuario.correo,
+      rol: usuario.rol,
+    },
+    JWT_SECRET,
+    { expiresIn: JWT_EXPIRES_IN }
   );
+};
+
+// Verificar token
+export const verifyToken = (token) => {
+  try {
+    return jwt.verify(token, JWT_SECRET);
+  } catch (error) {
+    return null;
+  }
 };

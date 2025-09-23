@@ -1,22 +1,19 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
 export const getAllUsers = async (req, res) => {
   try {
-    // req.user está disponible gracias al authMiddleware
-    console.log('Usuario logueado:', req.user);
+    const users = await prisma.usuario.findMany();
 
-    const users = await prisma.user.findMany({
-      select: {
-        id: true,
-        username: true,
-        email: true
-      }
-    });
-    res.json(users);
+    const fixedUsers = users.map((user) => ({
+      ...user,
+      id_usuario: user.id_usuario.toString(), // convierte BigInt a string
+    }));
+
+    res.json(fixedUsers);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Error al obtener usuarios' });
+    console.error("Error cargando usuarios:", error);
+    res.status(500).json({ error: "Error al obtener usuarios" });
   }
 };

@@ -7,23 +7,84 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  username  String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Usuario {
+  id_usuario  BigInt   @id @default(autoincrement())
+  nombre      String   @db.VarChar(100)
+  apellido    String   @db.VarChar(100)
+  dni         String   @unique @db.VarChar(20)
+  rol         String   @db.VarChar(30) // paciente, odontologo, administrador
+  direccion   String?  @db.Text
+  telefono    String?  @db.VarChar(30)
+  correo      String?  @unique @db.VarChar(150)
+  password    String   @db.VarChar(255)  // NUEVO CAMPO
+  creado_en   DateTime @default(now()) @db.Timestamptz(6)
 
-  @@map("users")
+  administrador Administrador?
+  paciente      Paciente?
+  odontologo    Odontologo?
 }
 
-model Student {
-  id        Int      @id @default(autoincrement())
-  name      String
-  lastName  String
-  age       Int
-  createdAt DateTime @default(now())
-
-  @@map("students") // Nombre real de la tabla en PostgreSQL
+model Administrador {
+  id_admin   BigInt  @id @default(autoincrement())
+  id_usuario BigInt  @unique
+  usuario    Usuario @relation(fields: [id_usuario], references: [id_usuario], onDelete: Cascade)
 }
+
+model Paciente {
+  id_paciente       BigInt    @id @default(autoincrement())
+  id_usuario        BigInt    @unique
+  fecha_nacimiento  DateTime? @db.Date
+  historial_clinico String?   @db.Text
+
+  usuario Usuario @relation(fields: [id_usuario], references: [id_usuario], onDelete: Cascade)
+  citas   Cita[]
+}
+
+model Odontologo {
+  id_odontologo     BigInt  @id @default(autoincrement())
+  id_usuario        BigInt  @unique
+  especialidad      String? @db.VarChar(100)
+  nro_colegiatura   String? @unique @db.VarChar(50)
+  telefono_consulta String? @db.VarChar(30)
+
+  usuario Usuario @relation(fields: [id_usuario], references: [id_usuario], onDelete: Cascade)
+  citas   Cita[]
+}
+
+model Consultorio {
+  id_consultorio BigInt  @id @default(autoincrement())
+  nombre         String  @db.VarChar(100)
+  ubicacion      String? @db.VarChar(255)
+  telefono       String? @db.VarChar(30)
+
+  citas Cita[]
+}
+
+model Servicio {
+  id_servicio  BigInt  @id @default(autoincrement())
+  nombre       String  @db.VarChar(100)
+  descripcion  String? @db.Text
+  duracion_min Int
+
+  citas Cita[]
+}
+
+model Cita {
+  id_cita        BigInt    @id @default(autoincrement())
+  id_paciente    BigInt
+  id_odontologo  BigInt
+  id_consultorio BigInt?
+  id_servicio    BigInt?
+  fecha          DateTime  @db.Date
+  hora_inicio    DateTime  @db.Time(6)
+  hora_fin       DateTime  @db.Time(6)
+  estado         String    @default("pendiente") @db.VarChar(30)
+  observaciones  String?   @db.Text
+  creado_en      DateTime  @default(now()) @db.Timestamptz(6)
+
+  paciente    Paciente    @relation(fields: [id_paciente], references: [id_paciente], onDelete: Restrict)
+  odontologo  Odontologo  @relation(fields: [id_odontologo], references: [id_odontologo], onDelete: Restrict)
+  consultorio Consultorio? @relation(fields: [id_consultorio], references: [id_consultorio], onDelete: SetNull)
+  servicio    Servicio?    @relation(fields: [id_servicio], references: [id_servicio], onDelete: SetNull)
+}
+
