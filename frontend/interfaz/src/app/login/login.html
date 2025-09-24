@@ -1,82 +1,78 @@
-<main class="flex justify-center items-center min-h-screen bg-gradient-to-brvia-indigo-100 to-blue-200 px-4">
-  <div class="w-full max-w-md bg-white shadow-xl rounded-2xl p-8 relative">
-    <!-- Logo o icono arriba -->
-    <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-blue-600 rounded-full p-4 shadow-lg">
-      <span class="text-white text-2xl">⚕️</span>
-    </div>
+<main class="flex justify-center items-center min-h-screen px-4">
+  <section class="flex items-center justify-center">
+    <!-- Contenedor del Login -->
+    <div class="bg-white flex shadow-2xl hover:shadow-3xl transition max-w-3xl rounded-3xl p-8">
 
-    <!-- Título -->
-    <h1 class="mt-6 text-3xl font-extrabold text-center text-gray-800 mb-6">
-      Iniciar Sesión
-    </h1>
+      <!--Formulario -->
+      <div class="lg:w-1/2 px-16 rounded-2xl">
+        <h2 class="font-bold text-2xl text-[#002D74]">Inicio de Sesión</h2>
+        <p class="text-sm mt-4">Bienvenido al Centro Médico Vida Plena</p>
 
-    <form (ngSubmit)="login()" class="space-y-5">
-      <!-- Email -->
-      <div>
-        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">
-          Correo electrónico
-        </label>
-        <div class="relative">
-          <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">📧</span>
-          <input
-            id="email"
-            type="email"
-            [(ngModel)]="email"
-            name="email"
-            required
-            class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 outline-none transition"
-            placeholder="tu@ejemplo.com" />
-        </div>
-      </div>
+        <form (ngSubmit)="login()" class="flex flex-col gap-4">
+          <!-- Correo -->
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">
+              Correo electrónico
+            </label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">📧</span>
+              <input id="email" type="email" [(ngModel)]="email" name="email" required class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 
+                       focus:outline-none focus:ring-2 transition" placeholder="tu@ejemplo.com" />
+            </div>
+          </div>
 
-      <!-- Password -->
-      <div>
-        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">
-          Contraseña
-        </label>
-        <div class="relative">
-          <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">🔒</span>
-          <input
-            id="password"
-            [type]="showPassword ? 'text' : 'password'"
-            [(ngModel)]="password"
-            name="password"
-            required
-            class="w-full pl-10 pr-10 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 outline-none transition"
-            placeholder="••••••••" />
-          <button type="button" (click)="showPassword = !showPassword"
-            class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600">
-            {{ showPassword ? '🙈' : '👁️' }}
+          <!-- Contraseña -->
+          <div>
+            <label for="password" class="block text-sm font-medium text-gray-700 mb-1">
+              Contraseña
+            </label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">🔒</span>
+              <input id="password" [type]="showPassword ? 'text' : 'password'" [(ngModel)]="password" name="password"
+                required class="w-full pl-10 pr-10 py-3 rounded-lg border border-gray-300 
+                       focus:border-blue-500 focus:outline-none focus:ring-2 transition" placeholder="••••••••" />
+              <button type="button" (click)="showPassword = !showPassword"
+                class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600">
+                {{ showPassword ? '🙈' : '👁️' }}
+              </button>
+            </div>
+          </div>
+
+          <!-- Botón de ingreso -->
+          <button type="submit" [disabled]="!email || !password" class="w-full py-3 px-4 bg-blue-600 text-white font-semibold rounded-lg shadow-md 
+                   hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed 
+                   focus:ring-4 focus:ring-blue-300">
+            Entrar
           </button>
-        </div>
+
+          <!-- Registro -->
+          <p class="mt-6 text-center text-sm text-gray-600">
+            ¿No tienes cuenta?
+            <br>
+            <a routerLink="/registro" class="text-blue-600 font-semibold hover:underline">Regístrate aquí</a>
+          </p>
+
+          <!-- Footer -->
+          <p class="mt-4 text-center text-xs text-gray-400">
+            © 2025 Clínica. Todos los derechos reservados.
+          </p>
+        </form>
       </div>
 
-      <!-- Botón -->
-      <button
-        type="submit"
-        [disabled]="!email || !password"
-        class="w-full py-3 px-4 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed">
-        Entrar
-      </button>
-    </form>
+      <!--Imagen -->
+      <div class="sm:block hidden w-1/2">
+        <img class="rounded-2xl hover:scale-105 transition-transform object-cover h-full"
+          src="https://inhouse.feban.net/wp-content/uploads/2021/02/4930343-scaled.jpg" alt="Login Imagen" />
+      </div>
+    </div>
 
     <!-- Mensajes -->
     <div *ngIf="errorMessage" class="mt-4 p-3 rounded-lg bg-red-100 text-red-700 border border-red-300 text-center">
       {{ errorMessage }}
     </div>
-    <div *ngIf="successMessage" class="mt-4 p-3 rounded-lg bg-green-100 text-green-700 border border-green-300 text-center">
+    <div *ngIf="successMessage"
+      class="mt-4 p-3 rounded-lg bg-green-100 text-green-700 border border-green-300 text-center">
       {{ successMessage }}
     </div>
-
-    <!-- Registro -->
-    <p class="mt-6 text-center text-sm text-gray-600">
-      ¿No tienes cuenta?
-      <a routerLink="/registro" class="text-blue-600 font-semibold hover:underline">Regístrate aquí</a>
-    </p>
-
-    <!-- Footer -->
-    <p class="mt-4 text-center text-xs text-gray-400">
-      © 2025 Clínica. Todos los derechos reservados.
-    </p>
-  </div>
+  </section>
 </main>
